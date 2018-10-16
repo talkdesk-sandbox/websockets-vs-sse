@@ -1,0 +1,21 @@
+version: "3"
+services:
+  sse:
+    build:
+      context: .
+    command: node sse.js
+    ports: [80]
+  wss:
+    build:
+      context: .
+    command: node wss.js
+    ports: [80]
+  nginx:
+    image: nginx
+    volumes: 
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl:/etc/nginx/ssl/
+    ports:
+      - 8080:8080 # wss
+      - 8081:8081 # sse
+      - 8443:8443 # sse + http2

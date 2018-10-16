@@ -1,0 +1,8 @@
+FROM node
+
+
+WORKDIR /code
+COPY . /code
+
+ENV PORT 80
+EXPOSE 80

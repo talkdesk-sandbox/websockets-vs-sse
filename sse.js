@@ -39,4 +39,4 @@ app.post("/push/:metric/:value", function(req, res) {
   res.send("Submited metric to " + clients.length + " clients");
 });
 
-app.listen(8080);
+app.listen(process.env.PORT || 8080, '0.0.0.0');
