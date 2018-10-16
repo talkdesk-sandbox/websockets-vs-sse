@@ -1,0 +1,18 @@
+object Frontend StreamingAPI
+
+note left of Frontend: Configure Subscriptions
+Frontend ->StreamingAPI: POST queries/avg_call_duration {sql: "select (...) from (...) group by  (...) ""}
+Frontend ->StreamingAPI: POST queries/active_agents {sql: "select (...) from (...) group by  (...) "}
+Frontend ->StreamingAPI: POST subscriptions{queries: ["avg_call_duration", "active_agents"}
+StreamingAPI -> Frontend: subscription_id
+
+note left of Frontend: Receive server sent events
+Frontend ->StreamingAPI: GET stream/subscription_id
+StreamingAPI -> Frontend: {"query": "avg_call_duration", result: 10}
+StreamingAPI -> Frontend: {"query": "active_agents", result: 2}
+
+note left of Frontend: Update a query
+Frontend ->StreamingAPI: PUT queries/avg_call_duration {sql: "select (...) from (...) group by  (...) ""}
+
+note left of Frontend: Subscribe a new query
+Frontend ->StreamingAPI: PUT subscriptions/:subscription_id {queries: ["avg_call_duration", "active_agents", "avg_time_ivr"}
